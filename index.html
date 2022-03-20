@@ -18,15 +18,23 @@
 
   <link rel="stylesheet" href="css/tailwind-compiled.css">
 
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
   <meta name="theme-color" content="#fafafa">
 </head>
 
-<body class="font-sans">
-
+<body class="font-sans" x-data="{ name: '', subline: '', personal_details: '', prismic: null, page: null }" 
+  x-init="prismic = await (await fetch('https://sebastianmartin-dev.prismic.io/api/v1/documents/search?ref=YjeH4hAAACgAUEjM&q=[[at(document.id,%22Yjc2QxAAACcATuDV%22)]]')).json();
+  const pages = prismic.results;
+  const getText = (field) => page[field].value[0]['text']
+  page = pages[0].data.cv;
+  name = getText('name');
+  subline = getText('subline');
+">
   <!-- Add your site or application content here -->
   <div class="p-8">
-    <h1 class="text-4xl">Sebastian <span class="font-bold">Martin</span></h1>
-    <h2 class="text-2xl font-bold mt-4">Generalist & Innovative Product Manager</h2>
+    <h1 class="text-4xl" x-text="name"></h1>
+    <h2 class="text-2xl font-bold mt-4" x-text="subline"></h2>
     <div class="flex flex-col space-y-1 text-slate-600 text-sm mt-4">
       <p>he/him | German citizen | born in 1988</p>
       <a href="mailto:sebastianmartin2044@gmail.com" class="underline">sebastianmartin2044@gmail.com</a>
